@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Getting started guide for the Servo Motor Enabled by NFC project using the FPB-RA2E3, PTX105R NFC reader, and SG90 servo motor." name="description"/>
-<title>Servo Motor Enabled by NFC: Getting Started Guide</title>
-<style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Servo Motor Enabled by NFC - Hands-on Start Guide</title>
+  <style>
 :root {
     --brand: #2b0a8c;
     --accent: #e6007e;
@@ -125,108 +123,579 @@ body > h1:first-of-type {
         padding: 2.5rem 20px;
     }
 }
-</style>
-<style>
-    .lead { font-size: 1.1rem; color: var(--muted); }
-    .note { margin: 1.2rem 0; padding: .8rem 1rem; border-left: 4px solid var(--accent); background: var(--surface); }
-    .step-image { max-width: 760px; border: 1px solid var(--line); border-radius: 8px; }
-    .compact li { margin-bottom: .55rem; }
-    .toc { padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
-    .toc ul { margin-bottom: 0; }
-    .parameter { white-space: nowrap; }
+
+
+  .document-subtitle { margin: -1.75rem 0 2.25rem; color: var(--muted); font-size: 1.08rem; }
+  .toc { margin: 2rem 0 3rem; padding: 1.2rem 1.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .toc h2 { margin-top: 0; }
+  .toc ol { columns: 1; padding-left: 1.4rem; list-style: none; }
+  .toc li { break-inside: avoid; margin: .25rem 0; }
+  .toc-level-h3 { margin-left: 1rem !important; }
+  .figure { margin: 1.4rem 0 .25rem; }
+  .figure-caption { margin: .25rem 0 1.6rem; color: var(--muted); text-align: center; font-size: .92rem; }
+  table tr:first-child th, table tr:first-child td { background: var(--brand); color: #fff; font-weight: 700; }
+  @media (max-width: 640px) { .toc ol { columns: 1; } }
+
   </style>
 </head>
 <body>
-<h1>Servo Motor Enabled by NFC: Getting Started Guide</h1>
-<p class="lead">This guide explains how to connect the hardware, open the project through the Xplore Developer Hub, build and debug the application, and test the near-field communication (NFC) controlled servo behavior.</p>
-<nav aria-label="Table of contents" class="toc">
-<strong>Contents</strong>
+  <h1>Servo Motor Enabled by NFC</h1>
+  <p class="document-subtitle"><strong>Hands-on Start Guide</strong><br>From idea to a working NFC-controlled actuation prototype with Renesas 365</p>
+
+
+
+<p>This hands-on lab takes you from an idea to a working prototype in
+which an NFC card controls a servo motor, using <strong>Renesas
+365</strong>, the industry’s first intelligent, platform-based
+development environment. You will load a complete, ready-to-evaluate
+solution from the <strong>Xplore Hub</strong>, review the system design,
+build the software in the browser, then flash, debug and run it on real
+hardware.</p>
+<p>The solution combines an <strong>RA2E3 MCU</strong>, the
+<strong>PTX105R NFC reader</strong> from Renesas and an <strong>SG90
+servo motor</strong>. The application reads an NFC card, validates the
+credential locally on the RA2E3, and moves the servo to show a clear
+physical response: a full sweep for a valid card, and a small movement
+for an invalid card.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav aria-label="Guide contents" class="toc"><h2>Contents</h2><ol><li class="toc-level-h2"><a href="#lab-kit-information">1. Lab Kit Information</a></li><li class="toc-level-h3"><a href="#how-to-get-the-kit">1.1 How to Get the Kit</a></li><li class="toc-level-h3"><a href="#kit-contents">1.2 Kit Contents</a></li><li class="toc-level-h3"><a href="#what-you-need">1.3 What You Need</a></li><li class="toc-level-h2"><a href="#renesas-365-and-the-xplore-hub">2. Renesas 365
+and the Xplore Hub</a></li><li class="toc-level-h3"><a href="#key-features">2.1 Key Features</a></li><li class="toc-level-h2"><a href="#procedure">3. Procedure</a></li><li class="toc-level-h3"><a href="#application-overview">3.1 Application
+Overview</a></li><li class="toc-level-h3"><a href="#set-up-the-hardware">3.2 Set Up the Hardware</a></li><li class="toc-level-h3"><a href="#load-the-solution-from-the-xplore-hub">3.3 Load
+the Solution from the Xplore Hub</a></li><li class="toc-level-h3"><a href="#explore-the-workspace">3.4 Explore the
+Workspace</a></li><li class="toc-level-h3"><a href="#review-the-system-design-esd">3.5 Review the
+System Design (ESD)</a></li><li class="toc-level-h3"><a href="#open-the-software-project-in-the-web-ide">3.6
+Open the Software Project in the Web IDE</a></li><li class="toc-level-h3"><a href="#build-the-application">3.7 Build the
+Application</a></li><li class="toc-level-h3"><a href="#flash-and-debug-on-the-hardware">3.8 Flash and
+Debug on the Hardware</a></li><li class="toc-level-h3"><a href="#run-the-application-and-view-results">3.9 Run the
+Application and View Results</a></li><li class="toc-level-h2"><a href="#next-steps">4. Next Steps</a></li><li class="toc-level-h2"><a href="#appendix">5. Appendix</a></li><li class="toc-level-h3"><a href="#troubleshooting">5.1 Troubleshooting</a></li><li class="toc-level-h2"><a href="#references">6. References</a></li><li class="toc-level-h2"><a href="#revision-history">7. Revision History</a></li></ol></nav><h2 id="lab-kit-information">1. Lab Kit Information</h2>
+<h3 id="how-to-get-the-kit">1.1 How to Get the Kit</h3>
+<p>The boards used in this lab are available from the Renesas website:
+<a href="https://www.renesas.com/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/fpb-ra2e3-fast-prototyping-board-ra2e3-mcu-group">FPB-RA2E3
+Fast Prototyping Board</a> and <a href="https://www.renesas.com/en/design-resources/boards-kits/ptx105rqc">PTX105R
+Quick-Connect Pmod Board</a>. The SG90 servo motor is a standard micro
+servo available from common electronics distributors.</p>
+<h3 id="kit-contents">1.2 Kit Contents</h3>
+<p>Hardware components:</p>
 <ul>
-<li><a href="#overview">Application overview</a></li>
-<li><a href="#hardware">Hardware preparation</a></li>
-<li><a href="#software">Software preparation</a></li>
-<li><a href="#run">Build, debug, and run</a></li>
-<li><a href="#configure">Configure the demonstration</a></li>
+<li><p>FPB-RA2E3 Fast Prototyping Board (RA2E3 MCU host with on-board
+J-Link debugger)</p></li>
+<li><p>PTX105R Quick-Connect Pmod Board (PTX105R NFC reader)</p></li>
+<li><p>SG90 servo motor with jumper wires</p></li>
+<li><p>NFC card</p></li>
+<li><p>USB cable</p></li>
 </ul>
-</nav>
-<h2 id="overview">Application overview</h2>
-<p>The application demonstrates an NFC-enabled door lock using the NFC Reader and Servo Motor software layers. The FPB-RA2E3 reads an NFC card through the PTX105R reader and moves the servo when the card meets the configured authorization condition.</p>
-<h2 id="hardware">Hardware preparation</h2>
-<h3>Required materials</h3>
-<ul>
-<li>FPB-RA2E3 Fast Prototyping Board</li>
-<li>SG90 servo motor</li>
-<li>PTX105R NFC reader board</li>
-<li>Three male-to-male jumper wires, 3 inches or longer</li>
-<li>Micro-USB cable</li>
-<li>One or more NFC cards or tags</li>
-</ul>
-<h3>Connect the servo motor</h3>
-<p>Connect the SG90 servo motor to the FPB-RA2E3 as shown below.</p>
+<p>The role of each board is summarised in Table 1.</p>
+<p><strong>Table 1. Boards and Devices Used</strong></p>
 <table>
+<colgroup>
+<col style="width: 19%"/>
+<col style="width: 32%"/>
+<col style="width: 48%"/>
+</colgroup>
 <thead>
-<tr><th>Servo wire</th><th>Function</th><th>FPB-RA2E3 connection</th><th>Microcontroller signal</th></tr>
+<tr>
+<th><strong>Function</strong></th>
+<th><strong>Board / Device</strong></th>
+<th><strong>Role</strong></th>
+</tr>
 </thead>
 <tbody>
-<tr><td>Red</td><td>5 V power</td><td>J2, pin 5</td><td>5 V</td></tr>
-<tr><td>Brown</td><td>Ground</td><td>J2, pin 6</td><td>Ground</td></tr>
-<tr><td>Yellow</td><td>Pulse-width modulation (PWM) control</td><td>PMOD2, pin 10</td><td>P301 / GTIOC7B, General PWM Timer channel 7</td></tr>
+<tr>
+<td>Application host</td>
+<td>FPB-RA2E3 Fast Prototyping Board</td>
+<td>Runs the FreeRTOS application, validates the NFC credential, and
+generates the servo PWM control signal.</td>
+</tr>
+<tr>
+<td>NFC interface</td>
+<td>PTX105R Quick-Connect Pmod Board</td>
+<td>Detects and reads supported NFC cards through the reader software
+stack.</td>
+</tr>
+<tr>
+<td>Mechanical output</td>
+<td>SG90 servo motor</td>
+<td>Moves to the position or sweep selected by the application
+credential logic.</td>
+</tr>
 </tbody>
 </table>
-<h3>Connect the NFC reader and USB cable</h3>
-<ol class="compact">
-<li>Connect the PTX105R NFC reader board to PMOD1. Align pin 1 on the PMOD connector with pin 1 on the PTX105R board.</li>
-<li>Connect the micro-USB cable from the computer to connector CN6 on the FPB-RA2E3.</li>
-</ol>
-<h2 id="software">Software preparation</h2>
-<ol class="compact"><li>Open the <a href="https://www.renesas.com/en/renesas365/xplore" rel="noopener noreferrer" target="_blank">Xplore Developer Hub</a> and locate the Servo Motor Enabled by NFC project.</li><li>Select <strong>Experience Now</strong> to open the project in your Renesas 365 (R365) workspace.</li><li>If prompted, sign in to your Renesas account or create an account to continue.</li><li>Open the software project workspace.</li></ol>
-
-<h2 id="run">Build, debug, and run</h2>
-<ol class="compact">
-<li>
-      In the left panel, expand the <strong>CMake</strong> extension and select <strong>Build</strong>.
-      <img alt="CMake extension with the Build command highlighted" class="step-image" src="data:image/png;base64,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"/>
-</li>
-<li>
-      Confirm that the build completes with exit code <code>0</code>.
-      <img alt="Build output showing that the build finished with exit code 0" class="step-image" src="data:image/png;base64,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"/>
-</li>
-<li>
-      In the left toolbar, open the <strong>Run and Debug</strong> view, then select the green <strong>Start Debugging</strong> button.
-      <img alt="Run and Debug toolbar icon" class="step-image" src="data:image/png;base64,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"/>
-<img alt="Start Debugging button in the debug panel" class="step-image" src="data:image/png;base64,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"/>
-</li>
-<li>
-      When prompted, select the paired <strong>J-Link</strong> interface and select <strong>Connect</strong>.
-      <img alt="J-Link interface selection dialog" class="step-image" src="data:image/png;base64,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"/>
-</li>
-<li>
-      After the debug session starts, select <strong>Continue</strong> or press <kbd>F5</kbd>.
-      <img alt="Continue button in the debug toolbar" class="step-image" src="data:image/png;base64,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"/>
-</li>
-</ol>
-<h3>Expected behavior</h3>
+<h3 id="what-you-need">1.3 What You Need</h3>
 <ul>
-<li>At startup, the servo moves to one position, waits briefly, and then moves to the configured position at the opposite end of its range.</li>
-<li>Presenting any NFC card causes the indicator light to blink.</li>
-<li>Presenting an authorized NFC card causes the servo to move momentarily.</li>
+<li><p>A PC with a Chrome or Edge web browser and internet
+access</p></li>
+<li><p>A MyRenesas account to sign in to Renesas 365</p></li>
+<li><p>A serial terminal program on your PC (for example Tera Term),
+optional for viewing the application log</p></li>
 </ul>
-<p>The demonstration authorizes cards according to whether the checksum of the card's unique identifier is odd or even. The selected authorization condition can be changed in the application configuration.</p>
-<h2 id="configure">Configure the demonstration</h2>
-<p>Open <code>src/app_thread_entry.c</code>, then adjust the following macros as needed:</p>
+<h2 id="renesas-365-and-the-xplore-hub">2. Renesas 365
+and the Xplore Hub</h2>
+<p>Renesas 365 is an intelligent, platform-based development environment
+that connects system design, hardware, and software in one workspace.
+Everything in the workspace is contextually modeled by the platform, so
+it understands your design and provides the right information at the
+point of need.</p>
+<p>All Xplore assets are delivered through Renesas 365. The
+<strong>Xplore Hub</strong> is your starting point to find complete
+solutions, reference applications and software building blocks, filtered
+by application or board.</p>
+<h3 id="key-features">2.1 Key Features</h3>
+<p>The following list highlights the platform capabilities used in this
+lab.</p>
 <ul>
-<li><code>NFC_AUTH_POLARITY_ODD</code>: Set to <code>true</code> or <code>false</code> to select which card checksum condition is authorized.</li>
-<li><code>SERVO_OPEN_POSITION</code>: Sets the servo position used for the open state.</li>
-<li><code>SERVO_LOCKED_POSITION</code>: Sets the servo position used for the locked state.</li>
+<li><p><strong>Contextual intelligence</strong>: the platform
+understands your design</p></li>
+<li><p><strong>Connected domains</strong>: system design (ESD), hardware
+and software, logically linked</p></li>
+<li><p><strong>Unified workflow</strong>: one environment, from idea to
+working prototype</p></li>
+<li><p><strong>Software building blocks</strong>: built, tested and
+validated by Renesas</p></li>
+<li><p><strong>Web IDE</strong>: edit, compile, debug, download and run
+from the browser, with nothing to install</p></li>
+<li><p><strong>Collaborative workspace</strong>: share, be shared with,
+and get notified when things change</p></li>
 </ul>
+<p class="figure"><img alt="Renesas 365 solution workspace: system design, hardware and software, linked" src="media/image1.jpg" style="width:6.25in;height:2.76042in" title="Renesas 365 solution workspace: system design, hardware and software, linked"/></p>
+<p class="figure-caption"><em>Figure 1. Renesas 365 solution workspace: system design, hardware
+and software, linked</em></p>
+<h2 id="procedure">3. Procedure</h2>
+<p>This section provides a step-by-step procedure to load, build, run
+and debug the solution project using Renesas 365.</p>
+<h3 id="application-overview">3.1 Application
+Overview</h3>
+<p>The Servo motor enabled by NFC solution project provides a complete
+reference implementation for locally controlled access and actuation. An
+FPB-RA2E3 board acts as the application host. The PTX105R Quick-Connect
+Pmod board connects to the RA2E3 over SPI with an interrupt line, and
+the SG90 servo motor is driven by a PWM output generated by the RA2E3
+General PWM Timer (GPT). Application messages are sent to the PC over
+the J-Link virtual COM port (230400 baud, 8N1).</p>
+<p>The application works in five steps:</p>
+<ol type="1">
+<li><p><strong>Detect the NFC card</strong>: the PTX105R continuously
+waits for a supported NFC card and reports it to the RA2E3
+application.</p></li>
+<li><p><strong>Read the credential</strong>: the NFC reader software
+identifies the card and provides its UID and available NDEF
+information.</p></li>
+<li><p><strong>Validate locally</strong>: the RA2E3 compares the
+presented credential with the configured valid-credential logic, with no
+cloud connection required.</p></li>
+<li><p><strong>Select the movement</strong>: a valid card triggers a
+sweep from 0 to 180 degrees, a pause and a return sweep. An invalid card
+triggers a 10-degree movement before the servo returns to 0
+degrees.</p></li>
+<li><p><strong>Generate the PWM output</strong>: the servo building
+block converts the requested angle into the timer duty cycle of a 50 Hz
+PWM signal.</p></li>
+</ol>
+<p class="figure"><img alt="Servo motor enabled by NFC - System block diagram" src="media/image2.jpg" style="width:5.83333in;height:3.30208in" title="Servo motor enabled by NFC - System block diagram"/></p>
+<p class="figure-caption"><em>Figure 2. Servo motor enabled by NFC - System block
+diagram</em></p>
+<p>The software is assembled from the reusable building blocks listed in
+Table 2.</p>
+<p><strong>Table 2. Software Components</strong></p>
 <table>
-<thead><tr><th>Configuration value</th><th>Minimum value</th><th>Maximum value</th></tr></thead>
+<colgroup>
+<col style="width: 32%"/>
+<col style="width: 67%"/>
+</colgroup>
+<thead>
+<tr>
+<th><strong>Software Building Block</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
 <tbody>
-<tr><td class="parameter"><code>NFC_AUTH_POLARITY_ODD</code></td><td><code>false</code></td><td><code>true</code></td></tr>
-<tr><td class="parameter"><code>SERVO_OPEN_POSITION</code></td><td>-90 degrees</td><td>90 degrees</td></tr>
-<tr><td class="parameter"><code>SERVO_LOCKED_POSITION</code></td><td>-90 degrees</td><td>90 degrees</td></tr>
+<tr>
+<td>NFC Card Reader</td>
+<td>Discovers and activates supported NFC cards, reads card identity and
+supported NDEF data, and delivers results through application
+callbacks.</td>
+</tr>
+<tr>
+<td>PTX105R Adapter and FSP Integration</td>
+<td>Connects the NFC workflow to the PTX105R SDK, SPI interface,
+interrupt, timers and platform drivers.</td>
+</tr>
+<tr>
+<td>Credential Validation Logic</td>
+<td>Evaluates the detected card credential locally and selects the
+valid-card or invalid-card movement response.</td>
+</tr>
+<tr>
+<td>PWM Servo Motor Control</td>
+<td>Generates the servo PWM output and provides reusable functions for
+opening, positioning (by angle or percentage), sweeping and closing the
+servo instance.</td>
+</tr>
+<tr>
+<td>Application Movement Sequence</td>
+<td>Implements the valid-card 0-to-180-degree sweep and the invalid-card
+10-degree indication before returning to the initial position.</td>
+</tr>
+<tr>
+<td>FreeRTOS Application Framework</td>
+<td>Supports the NFC workflow and the integration of multiple functional
+blocks within the application.</td>
+</tr>
 </tbody>
 </table>
-<p>After changing a value, rebuild the project, start a new debug session, and observe the resulting behavior.</p>
+<h3 id="set-up-the-hardware">3.2 Set Up the Hardware</h3>
+<p><strong>Materials:</strong></p>
+<ul>
+<li><p>FPB-RA2E3 &amp; USB debug/power cable</p></li>
+<li><p>SG90 servo motor</p></li>
+<li><p>PTX105R NFC reader board</p></li>
+<li><p>Three male-to-male jumper wires, 3 inches or longer</p></li>
+<li><p>One or more NFC cards or tags</p></li>
+</ul>
+<p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p>Plug the <strong>PTX105R Quick-Connect Pmod board</strong> into
+the <strong>PMOD1</strong> connector of the FPB-RA2E3.</p></li>
+<li><p>Connect the <strong>SG90 servo motor</strong> to the FPB-RA2E3 as
+shown in the system design: signal wire to the PWM output, power wire to
+<strong>+5 V</strong>, and ground wire to <strong>GND</strong>.</p></li>
+</ol>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 35%"/>
+<col style="width: 30%"/>
+</colgroup>
+<thead>
+<tr>
+<th>Servo Wire Function</th>
+<th>FPB-RA2E3 Connection</th>
+<th>MCU Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5V Power (Red)</td>
+<td>J2, pin 5</td>
+<td>5V</td>
+</tr>
+<tr>
+<td>Ground (Brown)</td>
+<td>J2, pin 6</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>PWM Control (Yellow)</td>
+<td>PMOD2, pin 10</td>
+<td>P301 / GTIO7B</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
+<li><p>Connect the FPB-RA2E3 to your PC with the USB cable. The on-board
+J-Link is used for flashing, debugging and the virtual COM port; no
+external probe is required.</p></li>
+</ol>
+<p><strong>Note:</strong> Check the servo wiring before powering the
+board. A reversed power connection can damage the servo.</p>
+<h3 id="load-the-solution-from-the-xplore-hub">3.3 Load
+the Solution from the Xplore Hub</h3>
+<ol type="1">
+<li><p>Open the Xplore Hub in your browser: <a href="https://renesas.com/Renesas365/Xplore">https://renesas.com/Renesas365/Xplore</a></p></li>
+<li><p>Open the <strong>Solution hub</strong> and filter by application
+or board, or search by functionality.</p></li>
+<li><p>Select the <strong>Servo motor enabled by NFC</strong> solution
+and click <strong>Experience now</strong>.</p></li>
+<li><p>Sign in with your MyRenesas credentials if prompted. Renesas 365
+opens with the full working solution in your workspace.</p></li>
+</ol>
+<p class="figure"><img alt="Xplore Hub: select Servo motor enabled by NFC, then click Experience now" src="media/image3.jpg" style="width:5.83333in;height:3.67708in" title="Xplore Hub: select Servo motor enabled by NFC, then click Experience now"/></p>
+<p class="figure-caption"><em>Figure 3. Xplore Hub: select Servo motor enabled by NFC, then
+click Experience now</em></p>
+<p><strong>Note:</strong> This is not a single software building block:
+it is a complete solution, to experiment with or to base your product
+on.</p>
+<h3 id="explore-the-workspace">3.4 Explore the
+Workspace</h3>
+<p>From the Renesas 365 home page, open the solution. The workspace
+shows the linked evaluation kit (FPB-RA2E3) and three linked
+domains:</p>
+<ul>
+<li><p><strong>System</strong> (ESD, Electronic System Design): the
+system design.</p></li>
+<li><p><strong>Hardware</strong>: the FPB-RA2E3 and PTX105R Pmod board
+reference designs.</p></li>
+<li><p><strong>Software</strong>: the software project, opened in the
+web IDE.</p></li>
+</ul>
+<p>Note that the workspace is collaborative: you can share it and get
+notified when things change.</p>
+<p class="figure"><img alt="Guide figure" src="media/image4.png" style="width:5.72609in;height:3.85838in"/></p>
+<p class="figure-caption"><em>Figure 4. Renesas 365: open the solution from your
+workspace</em></p>
+<h3 id="review-the-system-design-esd">3.5 Review the
+System Design (ESD)</h3>
+<ol type="1">
+<li><p>Open the <strong>System Design</strong> view (see Figure 5). The
+system is sketched in blocks: the RA2E3 MCU with its software building
+blocks, the PTX105R Pmod connected over SPI and IRQ, the servo motor
+connected to the PWM output and supplied with +5 V, and the PC connected
+over UART through the J-Link. Each block has hardware and software
+“blankets” (the logical representation of the hardware and
+software).</p></li>
+<li><p>Click on the MCU blue square to consult the
+documentation.</p></li>
+</ol>
+<p class="figure"><img alt="ESD: MCU with the related documentation listed on the right-hand side" src="media/image5.jpg" style="width:5.83333in;height:3.375in" title="ESD: MCU with the related documentation listed on the right-hand side"/></p>
+<p class="figure-caption"><em>Figure 5. ESD: MCU with the related documentation listed on the
+right-hand side</em></p>
+<ol start="3" type="1">
+<li><p>Click on the green icon (hardware blanket) to open the hardware
+project.</p></li>
+</ol>
+<p class="figure"><img alt="ESD: Click on the hardware blanket (green icon on the upper left of the MCU) to open the hardware project" src="media/image6.jpg" style="width:5.83333in;height:3.46875in" title="ESD: Click on the hardware blanket (green icon on the upper left of the MCU) to open the hardware project"/></p>
+<p class="figure-caption"><em>Figure 6. ESD: Click on the hardware blanket (green icon on the
+upper left of the MCU) to open the hardware project</em></p>
+<ol start="4" type="1">
+<li><p>This gives access to the related hardware resources: schematics,
+layout and Bill of Materials.</p></li>
+</ol>
+<p class="figure"><img alt="Hardware reference design (schematic) available from the workspace" src="media/image7.jpg" style="width:6.25in;height:2.86458in" title="Hardware reference design (schematic) available from the workspace"/></p>
+<p class="figure-caption"><em>Figure 7. Hardware reference design (schematic) available from
+the workspace</em></p>
+<h3 id="open-the-software-project-in-the-web-ide">3.6
+Open the Software Project in the Web IDE</h3>
+<ol type="1">
+<li><p>Back in the ESD, click on the SW blanket (pink icon on the upper
+left of the software components).</p></li>
+</ol>
+<p class="figure"><img alt="ESD: Click on the pink icon of the software blanket to open the software project" src="media/image8.jpg" style="width:5.41667in;height:3.4375in" title="ESD: Click on the pink icon of the software blanket to open the software project"/></p>
+<p class="figure-caption"><em>Figure 8. ESD: Click on the pink icon of the software blanket to
+open the software project</em></p>
+<ol start="2" type="1">
+<li><p>Click <strong>Open Project</strong> to open the web IDE and
+access the software project directly in the browser: no download, no
+installation, no toolchain setup needed. The <strong>src</strong> folder
+contains the application and the software building blocks:
+<strong>rs-nfc-card-reader</strong>, <strong>rs_servo_motor</strong> and
+<strong>rs-console-io</strong>.</p></li>
+</ol>
+<p class="figure"><img alt="Web IDE: edit, compile, debug, download and run from the browser" src="media/image9.jpg" style="width:6.25in;height:2.57292in" title="Web IDE: edit, compile, debug, download and run from the browser"/></p>
+<p class="figure-caption"><em>Figure 9. Web IDE: edit, compile, debug, download and run from
+the browser</em></p>
+<h3 id="build-the-application">3.7 Build the
+Application</h3>
+<ol type="1">
+<li><p>Click <strong>Build</strong> in the bottom bar of the web IDE.
+The environment is already configured; the compiler and linker run on
+Renesas servers.</p></li>
+<li><p>Check the build output in the terminal. A successful build ends
+with <strong>Build finished with exit code 0</strong>.</p></li>
+</ol>
+<p class="figure"><img alt="Build output in the web IDE" src="media/image10.jpg" style="width:6.25in;height:2.63542in" title="Build output in the web IDE"/></p>
+<p class="figure-caption"><em>Figure 10. Build output in the web IDE</em></p>
+<h3 id="flash-and-debug-on-the-hardware">3.8 Flash and
+Debug on the Hardware</h3>
+<ol type="1">
+<li><p>Open <strong>Debug</strong> from the left bar of the web IDE and
+select the <strong>Renesas WebUSB J-Link GDB</strong> configuration.
+Renesas 365 connects to your local hardware and finds the J-Link on the
+FPB-RA2E3: there is no traditional debug setup.</p></li>
+<li><p>Start the debug session. The application is flashed and execution
+stops at <strong>main</strong>.</p></li>
+<li><p>Step through the code, then <strong>Run</strong>.</p></li>
+<li><p><strong>Pause</strong> and inspect the threads, call stack and
+variables.</p></li>
+</ol>
+<p class="figure"><img alt="Debug session started from the web IDE" src="media/image11.jpg" style="width:6.25in;height:2.65625in" title="Debug session started from the web IDE"/></p>
+<p class="figure-caption"><em>Figure 11. Debug session started from the web IDE</em></p>
+<h3 id="run-the-application-and-view-results">3.9 Run the
+Application and View Results</h3>
+<ol type="1">
+<li><p>At this stage the board is flashed with the firmware, and the
+application runs whenever the board is powered or connected to your
+PC.</p></li>
+<li><p>Optionally, open your serial terminal on the J-Link COM port with
+<strong>230400 baud, 8N1</strong> to view the application log.</p></li>
+<li><p>Present a <strong>valid NFC card</strong> to the PTX105R antenna.
+The servo sweeps from <strong>0 to 180 degrees</strong>, pauses, and
+sweeps back to 0 degrees.</p></li>
+<li><p>Present an <strong>invalid NFC card</strong>. The servo makes a
+small <strong>10-degree</strong> movement and returns to 0
+degrees.</p></li>
+</ol>
+<p><strong>Note:</strong> This reference project demonstrates local
+credential-controlled actuation for evaluation and proof-of-concept use.
+A production access-control system requires application-specific
+security, credential provisioning, threat analysis, mechanical safety
+and product validation.</p>
+<h2 id="next-steps">4. Next Steps</h2>
+<p>By following this guide, you have gone from concept to a working
+prototype: system design, hardware selection, reusable software, then
+build, debug and a running device.</p>
+<p>Use the time saved to explore “what if”. As a first exercise, change
+the successful-read servo sweep from <strong>0–180 degrees to 0–90
+degrees</strong>, then rebuild and run. You can also adapt the locked
+and unlocked positions, the movement profile or the credential logic for
+your target product. Suggested next steps:</p>
+<ul>
+<li><p><strong>Visit the Xplore Hub</strong> and find the solutions that
+matter to you.</p></li>
+<li><p><strong>Register for Renesas 365</strong> and experiment with the
+platform.</p></li>
+<li><p><strong>Explore reference applications</strong>: load one, build
+it, run it.</p></li>
+<li><p><strong>Become an early adopter</strong>: talk to the Renesas
+team and help shape the future of the platform.</p></li>
+</ul>
+<p>This NFC-to-servo pattern can be reused across many compact,
+cost-sensitive access and actuation designs, including:</p>
+<p><strong>Table 3. Example Applications</strong></p>
+<table>
+<colgroup>
+<col style="width: 29%"/>
+<col style="width: 70%"/>
+</colgroup>
+<thead>
+<tr>
+<th><strong>Segment</strong></th>
+<th><strong>Example applications</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smart storage</td>
+<td>Smart cabinets, electronic lockers, storage compartments</td>
+</tr>
+<tr>
+<td>Equipment access</td>
+<td>Equipment enclosures, tool or asset compartments, service-access
+panels</td>
+</tr>
+<tr>
+<td>Appliances and consumer systems</td>
+<td>Appliance access panels, NFC-enabled compartments, user-selectable
+mechanical controls</td>
+</tr>
+<tr>
+<td>Building and room access</td>
+<td>Proof-of-concept door-lock systems, small access barriers,
+credential-triggered latches</td>
+</tr>
+<tr>
+<td>Industrial</td>
+<td>Machine-panel access concepts, local operator authorization,
+NFC-triggered positioning mechanisms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix">5. Appendix</h2>
+<h3 id="troubleshooting">5.1 Troubleshooting</h3>
+<table>
+<colgroup>
+<col style="width: 38%"/>
+<col style="width: 61%"/>
+</colgroup>
+<thead>
+<tr>
+<th><strong>Symptom</strong></th>
+<th><strong>Check</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Board not found when starting Debug</td>
+<td>USB cable connected to the FPB-RA2E3; board powered.</td>
+</tr>
+<tr>
+<td>MCU board detected in Renesas 365 but Debug fails with “gdbserver
+exit 0”</td>
+<td>The J-Link firmware on the MCU board needs to be updated. The
+simplest way is to download and install <a href="https://tool-support.renesas.com/vscode/web/docs/debugging-project.html">J-Link
+WinUSB Switcher Lite</a> and configure the board in WinUSB mode as
+described in this <a href="https://tool-support.renesas.com/vscode/web/docs/debugging-project.html">guide</a>.</td>
+</tr>
+<tr>
+<td>No reaction when a card is presented</td>
+<td>PTX105R Pmod board fully seated in PMOD1; card held flat and close
+to the antenna; card type supported by the reader.</td>
+</tr>
+<tr>
+<td>Card detected but servo does not move</td>
+<td>Servo signal wire on the PWM output; servo power on +5 V and ground
+on GND.</td>
+</tr>
+<tr>
+<td>No output in the terminal</td>
+<td>Correct J-Link COM port selected; settings 230400 baud, 8N1.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">6. References</h2>
+<ul>
+<li><p><a href="https://www.renesas.com/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/fpb-ra2e3-fast-prototyping-board-ra2e3-mcu-group">FPB-RA2E3
+Fast Prototyping Board | Renesas</a></p></li>
+<li><p><a href="https://www.renesas.com/en/design-resources/boards-kits/ptx105rqc">PTX105R
+Quick-Connect Pmod Board | Renesas</a></p></li>
+<li><p><a href="https://renesas.github.io/pwm-servo/">PWM Servo Motor
+Control – Software Building Block</a></p></li>
+<li><p><a href="https://github.com/renesas/nfc-card-reader">NFC Card
+Reader – Software Building Block</a></p></li>
+<li><p><a href="https://www.renesas.com/en/renesas365">Renesas 365 |
+Renesas</a></p></li>
+<li><p><a href="https://www.segger.com/downloads/jlink/">SEGGER J-Link
+downloads</a></p></li>
+</ul>
+<p><strong>Technical Updates/Technical News</strong></p>
+<ul>
+<li><p>The latest information can be downloaded from the Renesas
+Electronics website.</p></li>
+</ul>
+<p><strong>Website and Support</strong></p>
+<p>Renesas Electronics Website – <a href="https://www.renesas.com/">https://www.renesas.com/</a></p>
+<p>Inquiries – <a href="https://www.renesas.com/contact/">https://www.renesas.com/contact/</a></p>
+<h2 id="revision-history">7. Revision History</h2>
+<table>
+<colgroup>
+<col style="width: 19%"/>
+<col style="width: 25%"/>
+<col style="width: 55%"/>
+</colgroup>
+<thead>
+<tr>
+<th><strong>Revision</strong></th>
+<th><strong>Date</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.00</td>
+<td>Nov 2, 2026</td>
+<td>Initial release.</td>
+</tr>
+</tbody>
+</table>
+
 </body>
 </html>
